@@ -1,0 +1,37 @@
+@import 'normalize.css';
+
+:root {
+    --white: #FFFFFF;
+    --black: #303841;
+    --gray: #303841;
+    --yellow: #F6C90E;
+
+    --font-family: "Rubik", sans-serif;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+@font-face {
+    font-family: ProximaNova;
+    src: url('/assets/fonts/Rubik-Bold.ttf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: ProximaNova;
+    src: url('/assets/fonts/Rubik-Light.ttf');
+    font-weight: 300;
+}
+
+
+
