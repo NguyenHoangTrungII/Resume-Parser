@@ -3,7 +3,6 @@
 // import { hasLetterAndIsAllUpperCase, hasNumber, hasComma, hasLocation } from "./common-features";
 // import  {getTextWithHighestFeatureScore}  from '../feature-scoring-system/featureScoringSystem';
 
-
 // const divideSectionIntoSubsections = (lines)=>{
 //   // const lines = sections.profile || [];
 //   let subSections = [];
@@ -24,7 +23,6 @@
 //     [(item) => item.text.split(" ").length <=1 , -2], // Summary
 //   ];
 
-
 //   const [breakPoint, breakPointScore] = getTextWithHighestFeatureScore(
 //     textItems,
 //     BREAK_POINT_SECTION
@@ -34,45 +32,40 @@
 
 //   subSections = breakPointScore.filter((item)=>item.score === breakPointScore[0].score)
 
-
 //   return subSections;
 
+// const [email, emailScores] = getTextWithHighestFeatureScore(
+//   textItems,
+//   EMAIL_FEATURE_SETS
+// );
+// const [phone, phoneScores] = getTextWithHighestFeatureScore(
+//   textItems,
+//   PHONE_FEATURE_SETS
+// );
+// const [location, locationScores] = getTextWithHighestFeatureScore(
+//   textItems,
+//   LOCATION_FEATURE_SETS
+// );
+// const [url, urlScores] = getTextWithHighestFeatureScore(
+//   textItems,
+//   URL_FEATURE_SETS
+// );
+// const [summary, summaryScores] = getTextWithHighestFeatureScore(
+//   textItems,
+//   SUMMARY_FEATURE_SETS
+// );
 
+// const summaryLines = getSectionLinesByKeywords(sections, ["summary"]);
+// const summarySection = summaryLines
+//   .flat()
+//   .map((textItem) => textItem.text)
+//   .join(" ");
+// const objectiveLines = getSectionLinesByKeywords(sections, ["objective"]);
+// const objectiveSection = objectiveLines
+//   .flat()
+//   .map((textItem) => textItem.text)
+//   .join(" ");
 
-
-  // const [email, emailScores] = getTextWithHighestFeatureScore(
-  //   textItems,
-  //   EMAIL_FEATURE_SETS
-  // );
-  // const [phone, phoneScores] = getTextWithHighestFeatureScore(
-  //   textItems,
-  //   PHONE_FEATURE_SETS
-  // );
-  // const [location, locationScores] = getTextWithHighestFeatureScore(
-  //   textItems,
-  //   LOCATION_FEATURE_SETS
-  // );
-  // const [url, urlScores] = getTextWithHighestFeatureScore(
-  //   textItems,
-  //   URL_FEATURE_SETS
-  // );
-  // const [summary, summaryScores] = getTextWithHighestFeatureScore(
-  //   textItems,
-  //   SUMMARY_FEATURE_SETS
-  // );
-
-  // const summaryLines = getSectionLinesByKeywords(sections, ["summary"]);
-  // const summarySection = summaryLines
-  //   .flat()
-  //   .map((textItem) => textItem.text)
-  //   .join(" ");
-  // const objectiveLines = getSectionLinesByKeywords(sections, ["objective"]);
-  // const objectiveSection = objectiveLines
-  //   .flat()
-  //   .map((textItem) => textItem.text)
-  //   .join(" ");
-
-  
 //}
 
 // const divideSectionIntoSubsections = (lines) => {
@@ -101,7 +94,7 @@
 
 //   for (let i = 1; i < linesY.length; i++) {
 //     const lineGap = Math.round(linesY[i - 1] - linesY[i]);
-//     if (!lineGapToCount[lineGap]) 
+//     if (!lineGapToCount[lineGap])
 //     {
 //       lineGapToCount[lineGap] = 0;
 //     }
@@ -151,18 +144,28 @@
 //   return subsections;
 // };
 
-import { hasFristLetterUpperCase, hasMonth, hasMoreNumber, hasYear, isBold } from "./common-features";
-import { hasLetterAndIsAllUpperCase, hasNumber, hasComma, hasLocation } from "./common-features";
-import  {getTextWithHighestFeatureScore}  from '../feature-scoring-system/featureScoringSystem';
+import {
+  hasFristLetterUpperCase,
+  hasMonth,
+  hasMoreNumber,
+  hasYear,
+  //isBold,
+} from "./common-features";
+import {
+  hasLetterAndIsAllUpperCase,
+  hasNumber,
+  hasComma,
+  hasLocation,
+} from "./common-features";
+import { getTextWithHighestFeatureScore } from "../feature-scoring-system/featureScoringSystem";
 
-
-const divideSectionIntoSubsections = (lines)=>{
+const divideSectionIntoSubsections = (lines) => {
   let subSections = [];
   const textItems = lines.flat();
 
   const BREAK_POINT_SECTION = [
     [(item) => item.text.match(/^[a-zA-Z\sÀ-ỹ\.\-]+$/), 4],
-    [isBold, 3],
+    //[isBold, 3],
     [hasLetterAndIsAllUpperCase, 4],
     [hasFristLetterUpperCase, 1],
     [hasMonth, 1],
@@ -174,21 +177,21 @@ const divideSectionIntoSubsections = (lines)=>{
     [(item) => /\([0-9]+\)/.test(item.text), -4], // Phone
     [hasComma, -4], // Location
     [(item) => item.text.includes("//"), -4], // URL
-    [(item) => item.text.split(" ").length <=1 , -2], // Summary
+    [(item) => item.text.split(" ").length <= 1, -2], // Summary
   ];
-
 
   const [breakPoint, breakPointScore] = getTextWithHighestFeatureScore(
     textItems,
     BREAK_POINT_SECTION
   );
 
-  console.log(breakPointScore)
-  subSections = breakPointScore.filter((item)=>item.score === breakPointScore[0].score)
+  console.log(breakPointScore);
+  subSections = breakPointScore.filter(
+    (item) => item.score === breakPointScore[0].score
+  );
 
-  
-  return subSections;
-  }
- export { divideSectionIntoSubsections };
+  console.log(subSections);
 
-
+  return subSections.length >= 0 ? subSections : [];
+};
+export { divideSectionIntoSubsections };

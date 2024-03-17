@@ -6,12 +6,10 @@ export const hasLetter = (item) => /[a-zA-Z]/.test(item.text);
 
 export const hasNumber = (item) => /[0-9]/.test(item.text);
 
-
 export const hasMoreNumber = (item) => {
-  const numbers = item.text.match(/\d/g); 
-  return numbers && numbers.length > 9; 
+  const numbers = item.text.match(/\d/g);
+  return numbers && numbers.length > 9;
 };
-
 
 export const hasComma = (item) => item.text.includes(",");
 
@@ -24,23 +22,36 @@ export const hasOnlyLettersSpacesAmpersands = (item) =>
 //   hasLetter(item) && item.text.toUpperCase() === item.text;
 
 export const hasLetterAndIsAllUpperCase = (item) =>
-   item.text.toUpperCase() === item.text; 
+  item.text.toUpperCase() === item.text;
+
+export const areWordsAllUpperCase = (item) => {
+  const words = item.text.split(" ");
+
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+
+    if (word.charAt(0) !== word.charAt(0).toUpperCase()) {
+      return false;
+    }
+  }
+
+  return true;
+};
 
 export const hasFristLetterUpperCase = (item) =>
-   item.text[0]?.toUpperCase() === item.text[0]; 
-
+  item.text[0]?.toUpperCase() === item.text[0];
 
 // export const getFontsize =()=>{
 //   item.h
 // }
 
-  // Date Features
+// Date Features
 export const hasYear = (item) => /(?:19|20)\d{2}/.test(item.text);
 
 // prettier-ignore
- const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
- export const hasMonth = (item) =>
+export const hasMonth = (item) =>
   MONTHS.some(
     (month) =>
       item.text.includes(month) || item.text.includes(month.slice(0, 4))
@@ -50,7 +61,6 @@ const SEASONS = ["Summer", "Fall", "Spring", "Winter"];
 
 export const hasSeason = (item) =>
   SEASONS.some((season) => item.text.includes(season));
-
 
 export const hasPresent = (item) => item.text.includes("Present");
 
@@ -63,9 +73,13 @@ export const DATE_FEATURE_SETS = [
 ];
 
 //check
-const LOCATIONS = ['Ward', 'District', 'Street', 'City'];
+const LOCATIONS = ["Ward", "District", "Street", "City"];
 export const hasLocation = (item) =>
-LOCATIONS.some(
-    (location) =>
-      item.text.toUpperCase().includes(location.toUpperCase()));
+  LOCATIONS.some((location) =>
+    item.text.toUpperCase().includes(location.toUpperCase())
+  );
 
+export const hasNoLocation = (item) =>
+  !LOCATIONS.some((location) =>
+    item.text.toUpperCase().includes(location.toUpperCase())
+  );

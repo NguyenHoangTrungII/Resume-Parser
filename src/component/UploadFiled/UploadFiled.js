@@ -3,7 +3,7 @@ import styles from "./UploadFiled.module.scss";
 import classNames from "classnames/bind";
 import { Document, pdfjs, Page } from "react-pdf";
 // import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import 'react-pdf/dist/Page/TextLayer.css';
+import "react-pdf/dist/Page/TextLayer.css";
 
 import GroupTextItemsIntoLines from "../../helpers/GroupTextItemsIntoLines";
 import groupLinesIntoSections from "../../helpers/GroupLinesIntoSections";
@@ -14,6 +14,7 @@ import { extractEducation } from "../../lib/extract-section/extractEducation";
 import getSectionLinesByKeywords from "../../lib/common-features/getSectionLinesByKeywords";
 import { divideSectionIntoSubsections } from "../../lib/common-features/divideSectionIntoSubsections";
 import groupSubSectionByKeywords from "../../lib/common-features/groupSubSectionByKeywords";
+import CardInfo from "../CardInfo/CardInfo";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
@@ -25,7 +26,7 @@ function UploadFiled() {
   const [pdfFile, setPdfFile] = useState(null);
   const [lines, setLines] = useState([]);
 
-  var a ="";
+  var a = "";
 
   useEffect(() => {
     if (pdfFile) {
@@ -54,8 +55,8 @@ function UploadFiled() {
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
-        
-        const pageLines = textContent.items.map((item) =>  ({
+
+        const pageLines = textContent.items.map((item) => ({
           text: item.str,
           hasEOL: item.hasEOL,
           fontName: item.fontName,
@@ -65,10 +66,9 @@ function UploadFiled() {
           h: item.height,
           w: item.width,
           k: item.transform,
-          m: item.type
+          m: item.type,
         }));
         allLines = [...allLines, ...pageLines];
-
       }
 
       setLines(allLines);
@@ -89,52 +89,71 @@ function UploadFiled() {
 
   const sections = groupLinesIntoSections(groupedLines);
 
-  const abc  = getSectionLinesByKeywords(sections, ['project']);
+  const abc = getSectionLinesByKeywords(sections, ["project"]);
 
-  console.log(groupedLines)
+  console.log(groupedLines);
 
-  console.log(abc)
-  console.log(divideSectionIntoSubsections(abc))
-  console.log(groupSubSectionByKeywords(abc, divideSectionIntoSubsections(abc).map((item)=>item.text.trim())))
+  console.log(abc);
+  console.log(divideSectionIntoSubsections(abc));
+  console.log(
+    groupSubSectionByKeywords(
+      abc,
+      divideSectionIntoSubsections(abc).map((item) => item.text.trim())
+    )
+  );
 
+  const abcd = getSectionLinesByKeywords(sections, ["Experience"]);
 
-  const abcd  = getSectionLinesByKeywords(sections, ['EXPERIENCE']); 
+  console.log(abcd);
+  console.log(divideSectionIntoSubsections(abcd));
+  console.log(
+    "aaaa",
+    groupSubSectionByKeywords(abcd, divideSectionIntoSubsections(abcd))
+  );
 
-  console.log(abcd)
-  console.log(divideSectionIntoSubsections(abcd))
-  console.log(groupSubSectionByKeywords(abcd, divideSectionIntoSubsections(abcd).map((item)=>item.text.trim())))
+  // const dataEx = ơ
 
+  const dataExperience = groupSubSectionByKeywords(
+    abcd,
+    divideSectionIntoSubsections(abcd)
+  );
 
+  console.log(lines);
+  console.log(sections);
 
-  console.log(lines)
-  console.log((sections));
+  console.log(extractProfile(sections));
+  // console.log(extractProject(sections));
+  console.log(extractEducation(sections));
 
-  // console.log(extractProfile(sections));
-  // console.log(extractProject(sections))
-  // console.log(extractEducation(sections));
-  
-
-
+  console.log(
+    getSectionLinesByKeywords(sections, ["Experience"])
+      ?.map((item) => item[0].text)
+      .join(" ")
+  );
 
   return (
-    <div className={cx('container')}>
+    <div className={cx("container")}>
       <div>
-      <input type="file" onChange={(e) => readPDFFile(e)} />
-      {pdfFile && (
-        <div className="pdfContainer">
-          <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
-            <Page pageNumber={pageNumber} />
-          </Document>
-          <p>
-            Page {pageNumber} of {numPages}
-          </p>
-        </div>
-      )}
-    </div>
-    {/* <div className={cx('inputFiled')}>
-      <InputFiled dataProfile={extractProfile(sections).profile} dataEducation={extractEducation(sections).educations[0]} dataSkill={sections['Skills']}   />
-    
-    </div> */}
+        <input type="file" onChange={(e) => readPDFFile(e)} />
+        {pdfFile && (
+          <div className="pdfContainer">
+            <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
+              <Page pageNumber={pageNumber} />
+            </Document>
+            <p>
+              Page {pageNumber} of {numPages}
+            </p>
+          </div>
+        )}
+      </div>
+      <div className={cx("inputFiled")}>
+        <InputFiled
+          dataProfile={extractProfile(sections).profile}
+          dataEducation={extractEducation(sections).educations[0]}
+          dataSkill={sections["Skills"]}
+          dataExperience={dataExperience}
+        />
+      </div>
     </div>
   );
 }

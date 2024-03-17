@@ -5,13 +5,13 @@ import { Input } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
-function InputFiled({label='', value=''}) {
-
-  return <div className={cx('inputContainer')}>
-    <label>{label}</label>
-    <Input autoFocus={true} value={value} />
-    
-  </div>
-  }
+function InputFiled({ label = "", value = "", className }) {
+  return (
+    <div className={cx("inputContainer", className)}>
+      <label>{label}</label>
+      <Input autoFocus={true} value={value} />
+    </div>
+  );
+}
 
 export default InputFiled;

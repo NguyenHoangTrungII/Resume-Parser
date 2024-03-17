@@ -1,13 +1,35 @@
-import  getSectionLinesByKeywords from "../common-features/getSectionLinesByKeywords";
+import getSectionLinesByKeywords from "../common-features/getSectionLinesByKeywords";
 import { divideSectionIntoSubsections } from "../common-features/divideSectionIntoSubsections";
-import { DATE_FEATURE_SETS, hasComma, hasLetter, hasNumber } from "../common-features/common-features";
+import {
+  DATE_FEATURE_SETS,
+  hasComma,
+  hasLetter,
+  hasNumber,
+} from "../common-features/common-features";
 import { getTextWithHighestFeatureScore } from "../feature-scoring-system/featureScoringSystem";
-import { getBulletPointsFromLines, getDescriptionsLineIdx } from "../common-features/bullte-point";
+import {
+  getBulletPointsFromLines,
+  getDescriptionsLineIdx,
+} from "../common-features/bullte-point";
+import groupSubSectionByKeywords from "../common-features/groupSubSectionByKeywords";
 
-const SCHOOLS = ['College', 'University', 'Institute', 'School', 'Education', 'Academy', 'BASIS', 'Magnet', 'Trường', 'Đại Học', 'Cao Đẳng'];
-const hasSchool = (item) => SCHOOLS.some((school) => item.text.toUpperCase().includes(school.toUpperCase()));
-
-
+const SCHOOLS = [
+  "College",
+  "University",
+  "Institute",
+  "School",
+  "Education",
+  "Academy",
+  "BASIS",
+  "Magnet",
+  "Trường",
+  "Đại Học",
+  "Cao Đẳng",
+];
+const hasSchool = (item) =>
+  SCHOOLS.some((school) =>
+    item.text.toUpperCase().includes(school.toUpperCase())
+  );
 
 const DEGREES = ["Associate", "Bachelor", "Master", "PhD", "Ph.", "Engineer"];
 const hasDegree = (item) =>
@@ -47,48 +69,47 @@ export const extractEducation = (sections) => {
   const educations = [];
   const educationsScores = [];
 
-  const lines = getSectionLinesByKeywords(sections, ["education"]);
-  const subsections = divideSectionIntoSubsections(lines);
+  const subsectionLines = getSectionLinesByKeywords(sections, ["education"]);
 
-  for (const subsectionLines of subsections) {
-    const textItems = subsectionLines.flat();
+  // for (const subsectionLines of subsections) {
+  const textItems = subsectionLines?.flat();
 
-    const [school, schoolScores] = getTextWithHighestFeatureScore(
-      textItems,
-      SCHOOL_FEATURE_SETS
-    );
+  const [school, schoolScores] = getTextWithHighestFeatureScore(
+    textItems,
+    SCHOOL_FEATURE_SETS
+  );
 
-    const [degree, degreeScores] = getTextWithHighestFeatureScore(
-      textItems,
-      DEGREE_FEATURE_SETS
-    );
+  const [degree, degreeScores] = getTextWithHighestFeatureScore(
+    textItems,
+    DEGREE_FEATURE_SETS
+  );
 
-    const [gpa, gpaScores] = getTextWithHighestFeatureScore(
-      textItems,
-      GPA_FEATURE_SETS
-    );
+  const [gpa, gpaScores] = getTextWithHighestFeatureScore(
+    textItems,
+    GPA_FEATURE_SETS
+  );
 
-    const [date, dateScores] = getTextWithHighestFeatureScore(
-      textItems,
-      DATE_FEATURE_SETS
-    );
+  const [date, dateScores] = getTextWithHighestFeatureScore(
+    textItems,
+    DATE_FEATURE_SETS
+  );
 
-    let descriptions = [];
-    const descriptionsLineIdx = getDescriptionsLineIdx(subsectionLines);
+  let descriptions = [];
+  const descriptionsLineIdx = getDescriptionsLineIdx(subsectionLines);
 
-    if (descriptionsLineIdx !== undefined) {
-      const descriptionsLines = subsectionLines.slice(descriptionsLineIdx);
-      descriptions = getBulletPointsFromLines(descriptionsLines);
-    }
-
-    educations.push({ school, degree, gpa, date, descriptions });
-    educationsScores.push({
-      schoolScores,
-      degreeScores,
-      gpaScores,
-      dateScores,
-    });
+  if (descriptionsLineIdx !== undefined) {
+    const descriptionsLines = subsectionLines.slice(descriptionsLineIdx);
+    descriptions = getBulletPointsFromLines(descriptionsLines);
   }
+
+  educations.push({ school, degree, gpa, date, descriptions });
+  educationsScores.push({
+    schoolScores,
+    degreeScores,
+    gpaScores,
+    dateScores,
+  });
+  // }
 
   if (educations.length !== 0) {
     const coursesLines = getSectionLinesByKeywords(sections, ["course"]);

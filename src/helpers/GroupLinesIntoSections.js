@@ -1,7 +1,7 @@
 import {
   hasLetterAndIsAllUpperCase,
   hasOnlyLettersSpacesAmpersands,
-  isBold,
+  //isBold,
 } from "../lib/common-features/common-features";
 
 const PROFILE_SECTION = "profile";
@@ -20,9 +20,9 @@ const groupLinesIntoSections = (lines) => {
 
     const textItem = line[0];
 
-    if (isBold(textItem) && hasLetterAndIsAllUpperCase(textItem)) {
-      return true;
-    }
+    // if (isBold(textItem) && hasLetterAndIsAllUpperCase(textItem)) {
+    //   return true;
+    // }
 
     const text = textItem.text.trim();
     const textHasAtMost2Words =
