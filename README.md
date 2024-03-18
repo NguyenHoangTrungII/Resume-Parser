@@ -1,4 +1,4 @@
-# GO TEST
+# Resume - Parser by ReactJS
 [![](https://img.shields.io/badge/Facebook-nguyenhoangtrung-blue)](https://www.facebook.com/nguyenhoangtrunghhh/)
 [![](https://img.shields.io/badge/Gmail-nguyenhoangtrunghs%40gmail.com-red)](mailto:nguyenhoangtrunghs@gmail.com)
 
@@ -9,7 +9,7 @@
 ## :star: Get Started
 ``` bash
 # clone
-git clone https://github.com/NguyenHoangTrungII/FE-CartShop.git
+git clone https://github.com/NguyenHoangTrungII/...
 ```
 
 ``` bash
