@@ -77,14 +77,6 @@ function UploadFiled() {
     reader.readAsArrayBuffer(pdfFile);
   };
 
-  // const paragraphs = lines.map(item => item.text);
-
-  // const longString = paragraphs.join('');
-
-  // console.log('tách', longString);
-
-  // console.log('tách', longString.split(' '));
-
   const groupedLines = GroupTextItemsIntoLines(lines);
 
   const sections = groupLinesIntoSections(groupedLines);
@@ -102,34 +94,44 @@ function UploadFiled() {
     )
   );
 
-  const abcd = getSectionLinesByKeywords(sections, ["Experience"]);
+  console.log(sections)
 
-  console.log(abcd);
-  console.log(divideSectionIntoSubsections(abcd));
-  console.log(
-    "aaaa",
-    groupSubSectionByKeywords(abcd, divideSectionIntoSubsections(abcd))
-  );
+  // const abcd = getSectionLinesByKeywords(sections, ["Experience"]);
 
-  // const dataEx = ơ
+  const abcd = getSectionLinesByKeywords(sections, ["Experience"]).length === 0 
+    ? getSectionLinesByKeywords(sections, ["Work history"])
+    : getSectionLinesByKeywords(sections, ["Experience"]);
+
+
+  console.log(sections['Experience'  ]);
+  console.log(getSectionLinesByKeywords(sections, ["skill"]))
+
+  // console.log(divideSectionIntoSubsections(abcd));
+  // console.log(
+  //   "aaaa",
+  //   groupSubSectionByKeywords(abcd, divideSectionIntoSubsections(abcd))
+  // );
 
   const dataExperience = groupSubSectionByKeywords(
     abcd,
     divideSectionIntoSubsections(abcd)
   );
 
-  console.log(lines);
-  console.log(sections);
+  
+
+  // console.log(lines);
+  // console.log(sections);
 
   console.log(extractProfile(sections));
-  // console.log(extractProject(sections));
-  console.log(extractEducation(sections));
+  // console.log(extractEducation(sections));
 
-  console.log(
-    getSectionLinesByKeywords(sections, ["Experience"])
-      ?.map((item) => item[0].text)
-      .join(" ")
-  );
+  // console.log(
+  //   getSectionLinesByKeywords(sections, ["Experience"])
+  //     ?.map((item) => item[0].text)
+  //     .join(" ")
+  // );
+
+  const dataSkill = ( getSectionLinesByKeywords(sections, ["skill", "kỹ năng"] ))
 
   return (
     <div className={cx("container")}>
@@ -150,7 +152,7 @@ function UploadFiled() {
         <InputFiled
           dataProfile={extractProfile(sections).profile}
           dataEducation={extractEducation(sections).educations[0]}
-          dataSkill={sections["Skills"]}
+          dataSkill={dataSkill}
           dataExperience={dataExperience}
         />
       </div>

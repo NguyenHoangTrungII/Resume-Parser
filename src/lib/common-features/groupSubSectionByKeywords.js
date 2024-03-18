@@ -163,7 +163,7 @@ import {
 
 const groupSubSectionByKeywords = (lines, SECTION_TITLE_KEYWORD) => {
   let SECTION_TITLE_KEYWORDS = SECTION_TITLE_KEYWORD.map((item) =>
-    item.text.trim()
+    item.text?.trim()
   );
   const sections = {};
   let sectionTitle = "";
@@ -189,6 +189,7 @@ const groupSubSectionByKeywords = (lines, SECTION_TITLE_KEYWORD) => {
   }
 
   if (sectionLines.length > 0) {
+    
     sections[sectionTitle].lines = [...sectionLines];
   }
 

@@ -5,8 +5,9 @@ import { Input, TextField } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
-function CardInfo({ data }) {
-  console.log(data);
+function CardInfo({ data=[] }) {
+
+  console.log(data)
   return (
     <div>
       <div className={cx("projectName")}>
@@ -23,7 +24,7 @@ function CardInfo({ data }) {
         <label className={cx("inputDetail")}>
           {" "}
           <TextField
-            defaultValue={data?.lines.map((item) => item[0].text).join(" ")}
+            value={ data?.lines.map((item) => item[0].text).join(" ") }
             multiline
             rows={4}
             variant="standard"

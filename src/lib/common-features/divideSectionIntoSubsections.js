@@ -149,7 +149,7 @@ import {
   hasMonth,
   hasMoreNumber,
   hasYear,
-  //isBold,
+  isBold,
 } from "./common-features";
 import {
   hasLetterAndIsAllUpperCase,
@@ -165,7 +165,7 @@ const divideSectionIntoSubsections = (lines) => {
 
   const BREAK_POINT_SECTION = [
     [(item) => item.text.match(/^[a-zA-Z\sÀ-ỹ\.\-]+$/), 4],
-    //[isBold, 3],
+    [isBold, 3],
     [hasLetterAndIsAllUpperCase, 4],
     [hasFristLetterUpperCase, 1],
     [hasMonth, 1],

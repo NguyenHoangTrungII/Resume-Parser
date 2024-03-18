@@ -17,7 +17,6 @@ export const extractProfile = (sections) => {
 
   console.log(textItems);
 
-  //Nối chuỗi và tách ra mail, name, url riêng nếu có tại đây
   const text = textItems
     .flat()
     .map((item) => item.text)
@@ -59,18 +58,19 @@ export const extractProfile = (sections) => {
 
   const splitText = (itemTexts) => {
     const regexList = [
-      { regex: /^[^\d@\s]+/, type: "name" }, // Biểu thức chính quy tìm tên
-      { regex: /\d{3,}.+?\b(?=\d{5})/, type: "address" }, // Biểu thức chính quy tìm địa chỉ
+      { regex: /^[^\d@\s]+/, type: "name" }, 
+      { regex: /\d{3,}.+?\b(?=\d{5})/, type: "address" }, 
       {
         regex: /(\+?\d{1,3}[\s-]?)?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}/,
         type: "phone",
-      }, // Biểu thức chính quy tìm số điện thoại
+      }, 
       {
         regex: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/,
         type: "email",
-      }, // Biểu thức chính quy tìm địa chỉ email
-      { regex: /(?:https?|ftp):\/\/[\n\S]+/g, type: "url" }, // Biểu thức chính quy tìm URL
-      // Thêm các biểu thức chính quy khác vào đây
+      }, 
+      { regex: /(?:https?|ftp):\/\/[\n\S]+/g, type: "url" }, 
+      { regex: /(?:https?|ftp):\/\/[\n\S]+/g, type: "url" }, 
+
     ];
 
     const result = [];
@@ -91,10 +91,8 @@ export const extractProfile = (sections) => {
   };
 
   const mergeTexts = (originalTexts, newTexts) => {
-    // Tạo một bản sao của mảng originalTexts để không làm thay đổi mảng gốc
     const mergedTexts = [...originalTexts];
 
-    // Duyệt qua mảng newTexts và thêm từng phần tử vào mảng mergedTexts
     newTexts.forEach((newItem) => {
       mergedTexts.push(newItem);
     });
@@ -213,9 +211,7 @@ export const extractProfile = (sections) => {
     SUMMARY_FEATURE_SETS
   );
 
-  const missingInformation = !email || !phone || !url;
 
-  //Không muốn check ở đây nữa
 
   // if (missingInformation) {
   //   const contactInfo = textItems.map((item) => item.text).join(" ");
@@ -259,7 +255,7 @@ export const extractProfile = (sections) => {
     .flat()
     .map((textItem) => textItem.text)
     .join(" ");
-  const objectiveLines = getSectionLinesByKeywords(sections, ["objective"]);
+  const objectiveLines = getSectionLinesByKeywords(sections, ["objective, mục tiêu nghề nghiệp"]);
   const objectiveSection = objectiveLines
     .flat()
     .map((textItem) => textItem.text)

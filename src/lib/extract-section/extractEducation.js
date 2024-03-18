@@ -69,10 +69,14 @@ export const extractEducation = (sections) => {
   const educations = [];
   const educationsScores = [];
 
-  const subsectionLines = getSectionLinesByKeywords(sections, ["education"]);
+  const subsectionLines = getSectionLinesByKeywords(sections, ["education", "học vấn"] );
+
+  // console.log(subsectionLines)
 
   // for (const subsectionLines of subsections) {
   const textItems = subsectionLines?.flat();
+
+  console.log(textItems)
 
   const [school, schoolScores] = getTextWithHighestFeatureScore(
     textItems,

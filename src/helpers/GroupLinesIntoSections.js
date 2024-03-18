@@ -1,7 +1,7 @@
 import {
   hasLetterAndIsAllUpperCase,
   hasOnlyLettersSpacesAmpersands,
-  //isBold,
+  isBold,
 } from "../lib/common-features/common-features";
 
 const PROFILE_SECTION = "profile";
@@ -20,9 +20,9 @@ const groupLinesIntoSections = (lines) => {
 
     const textItem = line[0];
 
-    // if (isBold(textItem) && hasLetterAndIsAllUpperCase(textItem)) {
-    //   return true;
-    // }
+    if (isBold(textItem) && hasLetterAndIsAllUpperCase(textItem)) {
+      return true;
+    }
 
     const text = textItem.text.trim();
     const textHasAtMost2Words =
@@ -34,16 +34,32 @@ const groupLinesIntoSections = (lines) => {
       "education",
       "project",
       "skill",
+      // "học vấn", 
+      // "kinh nghiệm",
+      // "dự án",
+      // "kỹ năng"
+    
     ];
     const SECTION_TITLE_SECONDARY_KEYWORDS = [
       "job",
       "course",
       "extracurricular",
       "objective",
-      "summary", // LinkedIn generated resume has a summary section
+      "summary", 
       "award",
       "honor",
       "project",
+      "activitie",
+      "certification",
+      "hobbies",
+      "reference",
+      "objective",
+      "additional information",
+      "Interest",
+      "Work history"
+      // "mục tiêu nghề nghiệp",
+      // "hoạt động"
+
     ];
     const SECTION_TITLE_KEYWORDS = [
       ...SECTION_TITLE_PRIMARY_KEYWORDS,

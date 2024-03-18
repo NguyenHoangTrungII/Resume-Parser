@@ -73,7 +73,7 @@ export const DATE_FEATURE_SETS = [
 ];
 
 //check
-const LOCATIONS = ["Ward", "District", "Street", "City"];
+const LOCATIONS = ["Ward", "District", "Street", "City", "Quận", "Huyện", "Đường", "Thành phố", "Số Nhà"];
 export const hasLocation = (item) =>
   LOCATIONS.some((location) =>
     item.text.toUpperCase().includes(location.toUpperCase())
